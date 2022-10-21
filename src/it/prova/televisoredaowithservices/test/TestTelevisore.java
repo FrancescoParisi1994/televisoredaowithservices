@@ -13,30 +13,34 @@ public class TestTelevisore {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		TelevisoreService televisoreService=MyServiceFactory.getTelevisoreServiceImp();
-		
+		TelevisoreService televisoreService = MyServiceFactory.getTelevisoreServiceImp();
+
 		testList(televisoreService);
 		fineTest(televisoreService);
-		
+
 		testInsert(televisoreService);
+		fineTest(televisoreService);
+
+		testDelete(televisoreService);
 		fineTest(televisoreService);
 	}
 
+	// MYTOOL===========00
 	private static void intro(String input) {
-		System.out.println("\t..."+input+" Inizio...");
+		System.out.println("\t..." + input + " Inizio...");
 	}
-	
-	private static void outro(String input) {
-		
-		System.out.println("\t..."+input+" Riuscito...");
+
+	private static void outro(String input, TelevisoreService televisoreService) throws Exception {
+		televisoreService.removeAll();
+		System.out.println("\t..." + input + " Riuscito...");
 	}
-	
+
 	private static void fineTest(TelevisoreService televisoreService) throws Exception {
-		System.out.println("elementi attualmente presenti sulla lista sono: "+televisoreService.list().size());
+		System.out.println("elementi attualmente presenti sulla lista sono: " + televisoreService.list().size());
 	}
-	
+
 	private static Date stringToDate(String input) throws ParseException {
-		Date result=new SimpleDateFormat("dd/MM/yyyy").parse(input);
+		Date result = new SimpleDateFormat("dd/MM/yyyy").parse(input);
 		return result;
 	}
 
@@ -46,33 +50,62 @@ public class TestTelevisore {
 			System.out.println(iterable_element.toString());
 		}
 	}
+
+	// METODI=============================
 	private static void testList(TelevisoreService televisoreService) throws Exception {
-		
-		String titolo="testList";
+
+		String titolo = "testList";
 		intro(titolo);
-		List<Televisore> listaAttuale=televisoreService.list();
+		List<Televisore> listaAttuale = televisoreService.list();
 		System.out.println(listaAttuale.size());
-		if (listaAttuale.size()==0) {
+		if (listaAttuale.size() == 0) {
 			System.out.println("nessun elemento trovato");
-		}else {
+		} else {
 			for (Televisore televisoreItem : listaAttuale) {
 				System.out.println(televisoreItem.toString());
 			}
 		}
-		outro(titolo);
+		outro(titolo, televisoreService);
 	}
-	
+
 	private static void testInsert(TelevisoreService televisoreService) throws ParseException, Exception {
-		
-		String titolo="testInsert";
+
+		String titolo = "testInsert";
 		intro(titolo);
-		int risultato=televisoreService.insert(new Televisore("OK", "Plasma", 32, stringToDate("05/09/1995")));
+		int risultato = televisoreService.insert(new Televisore("OK", "Plasma", 32, stringToDate("05/09/1995")));
 		System.out.println(risultato);
-		if (risultato==0) {
+		if (risultato == 0) {
 			throw new RuntimeException("INSERT FALLITA");
 		}
 		selectAll(televisoreService);
-		outro(titolo);
+		outro(titolo, televisoreService);
 	}
-}
 
+	private static void testDelete(TelevisoreService televisoreService) throws Exception {
+
+		String titolo = "testDelete";
+		intro(titolo);
+		televisoreService.insert(new Televisore("OK", "Plasma", 32, stringToDate("05/09/1995")));
+		televisoreService.insert(new Televisore("OK", "Plasma", 32, stringToDate("05/09/1995")));
+		for (Televisore iterable_element : televisoreService.list()) {
+			long temp = iterable_element.getId();
+			televisoreService.delete(iterable_element);
+			if (!(televisoreService.get(temp) == null || televisoreService.get(temp).getMarca() == null)) {
+				throw new RuntimeException("DELETE FALLITA");
+			}
+		}
+		outro(titolo, televisoreService);
+	}
+
+	/*
+	 * private static void testUpdate(TelevisoreService televisoreService) throws
+	 * Exception {
+	 * 
+	 * String titolo="testUpdate"; intro(titolo); televisoreService.insert(new
+	 * Televisore("OK", "Plasma", 32, stringToDate("05/09/1995")));
+	 * 
+	 * outro(titolo, televisoreService);
+	 * 
+	 * }
+	 */
+}

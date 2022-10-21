@@ -21,4 +21,5 @@ public interface TelevisoreService {
 
 	public List<Televisore> findByExample(Televisore input) throws Exception;
 
+	public int removeAll() throws Exception;
 }

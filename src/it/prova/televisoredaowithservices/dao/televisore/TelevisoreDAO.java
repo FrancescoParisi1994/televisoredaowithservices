@@ -7,14 +7,14 @@ import java.util.List;
 import it.prova.televisoredaowithservices.dao.IBaseDAO;
 import it.prova.televisoredaowithservices.model.Televisore;
 
-public interface TelevisoreDAO extends IBaseDAO<Televisore>{
-	
+public interface TelevisoreDAO extends IBaseDAO<Televisore> {
+
 	public int removeAll() throws Exception;
 
 	@Override
 	default void setConnection(Connection connection) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -53,10 +53,10 @@ public interface TelevisoreDAO extends IBaseDAO<Televisore>{
 		return null;
 	}
 
-	public List<Televisore> findAllBetweenDate(Date before,Date after);
-	
+	public List<Televisore> findAllBetweenDate(Date before, Date after);
+
 	public Televisore findPiuGrande();
-	
+
 	public List<Televisore> findAllDegliUltimi6MesiByMarca();
-	
+
 }
