@@ -1,7 +1,10 @@
 package it.prova.televisoredaowithservices.service.televisore;
 
 import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import it.prova.televisoredaowithservices.connection.MyConnection;
@@ -35,6 +38,7 @@ public class TelevisoreServiceImp implements TelevisoreService{
 		// TODO Auto-generated method stub
 		return result;
 	}
+		
 	@Override
 	public Televisore get(Long idInput) throws Exception {
 		// TODO Auto-generated method stub
@@ -47,8 +51,17 @@ public class TelevisoreServiceImp implements TelevisoreService{
 	}
 	@Override
 	public int insert(Televisore input) throws Exception {
+		int result=0;
+		try (Connection connection=MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)){
+			televisoreDAO.setConnection(connection);
+			result=televisoreDAO.insert(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			// TODO: handle exception
+		}
 		// TODO Auto-generated method stub
-		return 0;
+		return result;
 	}
 	@Override
 	public int delete(Televisore input) throws Exception {

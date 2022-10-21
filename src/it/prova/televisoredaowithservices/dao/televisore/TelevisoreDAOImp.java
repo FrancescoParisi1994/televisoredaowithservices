@@ -100,8 +100,27 @@ public class TelevisoreDAOImp<T> extends AbstractMySQLDAO implements TelevisoreD
 
 	@Override
 	public int insert(Televisore input) throws Exception {
+		
+		controlloParametriIngrsso(input);
+		if (input.getMarca()==null||input.getMarca().isBlank()||input.getModello()==null||input.getModello()==null||input.getDataProduzione()==null||input.getPollici()<1) {
+			throw new RuntimeException("inserire elemento valido");
+		}
+		controlloConnessione();
+		
+		int result=0;
+		try (PreparedStatement preparedStatement=connection.prepareStatement("insert into televisore(marca,modello,pollici,dataproduzione) values (?,?,?,?)")){
+			preparedStatement.setString(1, input.getMarca());
+			preparedStatement.setString(2, input.getModello());
+			preparedStatement.setInt(3, input.getPollici());
+			preparedStatement.setDate(4, new java.sql.Date(input.getDataProduzione().getTime()));
+			result=preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			// TODO: handle exception
+		}
 		// TODO Auto-generated method stub
-		return 0;
+		return result;
 	}
 
 	@Override

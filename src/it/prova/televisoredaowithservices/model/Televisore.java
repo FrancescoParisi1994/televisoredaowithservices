@@ -23,6 +23,14 @@ public class Televisore {
 		super();
 	}
 
+	public Televisore(String marca, String modello, int pollici, Date dataProduzione) {
+		super();
+		this.marca = marca;
+		this.modello = modello;
+		this.pollici = pollici;
+		this.dataProduzione = dataProduzione;
+	}
+
 	// ==========================
 	public Long getId() {
 		return id;
