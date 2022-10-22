@@ -53,10 +53,10 @@ public interface TelevisoreDAO extends IBaseDAO<Televisore> {
 		return null;
 	}
 
-	public List<Televisore> findAllBetweenDate(Date before, Date after);
+	public List<Televisore> findAllBetweenDate(Date before, Date after) throws Exception;
 
-	public Televisore findPiuGrande();
+	public Televisore findPiuGrande() throws Exception;
 
-	public List<Televisore> findAllDegliUltimi6MesiByMarca();
+	public List<String> findAllDegliUltimi6MesiByMarca() throws Exception;
 
 }

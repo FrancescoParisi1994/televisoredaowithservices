@@ -118,8 +118,63 @@ public class TelevisoreServiceImp implements TelevisoreService {
 
 	@Override
 	public List<Televisore> findByExample(Televisore input) throws Exception {
+		List<Televisore> result = new ArrayList<>();
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			televisoreDAO.setConnection(connection);
+			result = televisoreDAO.findByExample(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			// TODO: handle exception
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return result;
+	}
+
+	@Override
+	public List<Televisore> findAllBetweenDate(Date before, Date after) throws Exception {
+		List<Televisore> result = new ArrayList<>();
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			televisoreDAO.setConnection(connection);
+			result = televisoreDAO.findAllBetweenDate(before,after);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			// TODO: handle exception
+		}
+		// TODO Auto-generated method stub
+		return result;
+	}
+
+	@Override
+	public Televisore findPiuGrande() throws Exception {
+		Televisore result = new Televisore();
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			televisoreDAO.setConnection(connection);
+			result = televisoreDAO.findPiuGrande();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			// TODO: handle exception
+		}
+		// TODO Auto-generated method stub
+		return result;
+	}
+
+	@Override
+	public List<String> findAllDegliUltimi6MesiByMarca() throws Exception {
+		List<String> result = new ArrayList<>();
+		try (Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+			televisoreDAO.setConnection(connection);
+			result = televisoreDAO.findAllDegliUltimi6MesiByMarca();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			// TODO: handle exception
+		}
+		// TODO Auto-generated method stub
+		return result;
+
 	}
 
 }
